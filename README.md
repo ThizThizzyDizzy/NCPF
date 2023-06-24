@@ -4,6 +4,7 @@
 # File Format
 NCPF is no longer just a file type, but rather a data structure, and can be saved in any file format that supports it.
 Files should have a dual extension, with `.ncpf` followed by the extension of the format (For example, `.ncpf.json`)
+Another prefix extension may be added as well to help denote the contents of the file; (ex. `.cfg.ncpf.json`) There is no defined naming convention for prefix extensions
 
 Any file format that supports the neccesary data structure is supported.
 
