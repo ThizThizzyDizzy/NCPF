@@ -26,16 +26,16 @@ Elements have the following structure:
 - (additional values depending on the type, listed below)
 
 Here is a list of all defined types:
-- Legacy Block (for 1.12 and below)
-- Legacy Item (for 1.12 and below)
-- Legacy Fluid (for 1.12 and below)
-- Oredict (for 1.12 and below; use tags for newer versions)
-- Block (1.13+)
-- Item (1.13+)
-- Fluid (1.13+)
-- Block Tag
-- Item Tag
-- Fluid Tag
+- `legacy_block` (for 1.12 and below)
+- `legacy_item` (for 1.12 and below)
+- `legacy_fluid` (for 1.12 and below)
+- `oredict` (for 1.12 and below; use tags for newer versions)
+- `block` (1.13+)
+- `item` (1.13+)
+- `fluid` (1.13+)
+- `block_tag`
+- `item_tag`
+- `fluid_tag`
 
 Custom types are also allowed.
 It is highly reccommended to identify custom types to avoid compatibility issues (For example, using a namespaced key), but it is not required.
@@ -44,22 +44,52 @@ It is highly reccommended to identify custom types to avoid compatibility issues
 A block with optional metadata or NBT (1.12 and below)
 - **String** `name` (Must be a namespaced key; ex. `minecraft:stone`)
 - **Integer** `metadata` (must only be included if the block has multiple states)
-- **String** `nbt` (Optional; only for block entities)
+- **String** `nbt` (Optional; only for block entities. This is in SNBT format)
 
 ### Legacy Item
 An item with optional metadata or NBT (1.12 and below)
 - **String** `name`
 - **Integer** `metadata` (must only be included if the item has variants)
-- **String** `nbt` (Optional)
+- **String** `nbt` (Optional; This is in SNBT format)
 
 ### Legacy Fluid
 A fluid (1.12 and below)
 - **String** `name`
 
 ### Oredict
-### Item
+An collection of blocks or items defined by the oredict
+- **String** `oredict`
+
 ### Block
+A block with optional blockstates or NBT (1.13+)
+- **String** `name` (Must be a namespaced key; ex. `minecraft:stone`)
+- **Object** `blockstate` (optional, only include if a specific state or states are required)
+This contains all required states, with the state name as the key, and the value as either an `Integer` or `String`
+*Numerical values may not be saved as strings*
+- **String** `nbt` (Optional; only for block entities.  This is in SNBT format)
+
+### Item
+An item with optional NBT (1.13+)
+- **String** `name` (Must be a namespaced key; ex. `minecraft:stick`)
+- **String** `nbt` (Optional; This is in SNBT format)
+
 ### Fluid
+A fluid (1.13+)
+- **String** `name` (Must be a namespaced key; ex. `minecraft:water`)
+
 ### Block Tag
+A collection of blocks with optional blockstates or NBT (1.13+)
+- **String** `name` (Must be a namespaced key, prefixed with `#`; ex. `#minecraft:fences`)
+- **Object** `blockstate` (optional, only include if a specific state or states are required)
+This contains all required states, with the state name as the key, and the value as either an `Integer` or `String`
+*Numerical values may not be saved as strings*
+- **String** `nbt` (Optional; only for block entities.  This is in SNBT format)
+
 ### Item Tag
+A collection of items with optional NBT (1.13+)
+- **String** `name` (Must be a namespaced key, prefixed with `#`; ex. `#minecraft:fences`)
+- **String** `nbt` (Optional; This is in SNBT format)
+
 ### Fluid Tag
+A collection of fluids (1.13+)
+- **String** `name` (Must be a namespaced key, prefixed with `#`; ex. `#minecraft:water`)
