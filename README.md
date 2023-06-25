@@ -20,9 +20,15 @@ Any file format that supports the neccesary data structure is supported.
 Commonly used types within NCPF that are standardized and defined here. They are all objects, containing the listed substrucutre
 
 ## Element
-Refers to a block, item, fluid, or something else present ingame.
-
+A part used in a design.
 Elements have the following structure:
+- **Object** `definition` (an Element Definition)
+- **Object** `modules` (Optional; keyed list of additional modules)
+
+## Element Definition
+Defines a block, item, fluid, or something else present ingame.
+
+Element definitions have the following structure:
 - **String** `type`
 - (additional values depending on the type, listed below)
 
@@ -94,3 +100,109 @@ A collection of items with optional NBT (1.13+)
 ### Fluid Tag
 A collection of fluids (1.13+)
 - **String** `name` (Must be a namespaced key, prefixed with `#`; ex. `#minecraft:water`)
+
+## Module
+Refers to a section of NCPF that may be added, extended, or replaced by addons or other software. These may be used to store additional information about configurations or designs that are not a part of core NCPF
+It is reccommended to use a namespaced key to denote modules, but this is not required.
+
+# NCPF Structure
+**NCPF Version 1**
+
+## Base Structure
+The base object contains the following tags:
+- **Integer** `version` (The NCPF format version)
+- **Object** `configuration` (This defines the indexing of elements used for designs in the file)
+- **List** `addons` (Optional; a list of addons)
+- **List** `designs` (Optional; A list of contained designs)
+
+## Configurations
+The configuration object contains configurations for defined design types; keys are recommended to be namespaced keys, but this is not required.
+The general configuration format is as follows:
+- **Object** `modules` (Contains various NCPF modules that can store additional information for the configuration)
+
+The following configurations are defined in NCPF:
+`nuclearcraft:underhaul_sfr`
+`nuclearcraft:overhaul_sfr`
+`nuclearcraft:overhaul_msr`
+`nuclearcraft:overhaul_turbine`
+
+### Underhaul SFR
+- **List** `blocks` (List of Elements)
+- **List** `fuels` (List of Elements)
+
+### Overhaul SFR
+- **List** `blocks` (List of Elements)
+- **List** `coolant_recipes` (List of Elements)
+
+Each block element may also contain:
+- **List** `recipes` (Optional; List of Elements)
+
+### Overhaul MSR
+- **List** `blocks` (List of Elements)
+
+Each block element may also contain:
+- **List** `recipes` (Optional; List of Elements)
+
+### Overhaul Turbine
+- **List** `blocks` (List of Elements)
+- **List** `recipes` (List of Elements)
+
+## Addons
+Addons can add configurations, or add elements or modules to any part of any configuration; They have the following structure:
+- **Object** `modules` (keyed list of Modules)
+- **Object** `configuration` (configurations added by this addon)
+
+Elements in an addon must match the path of where they are to be added in the main configuration. Overriding elements is *not* allowed.
+The resolution for conflicting modules depends on the specific module
+
+## Designs
+A design is a multiblock, structure, or other object described by this file; they have the following structure:
+- **String** `type` (the type of the design. This must match the name of a configuration)
+- **Object** `modules` (keyed list of Modules)
+- **Array** `design` (An array containing a list of indicies that define the design; the structure of this array depends on the design type)
+
+Element indicies start with the `configuration`, then continue through any matching elements in order of each addon in `addons`
+(All indicies start at `0`)
+
+The following types are defined in NCPF:
+`nuclearcraft:underhaul_sfr`
+`nuclearcraft:overhaul_sfr`
+`nuclearcraft:overhaul_msr`
+`nuclearcraft:overhaul_turbine`
+
+Multi-dimensional arrays must be consolidated into one array in the following order; (Here's the definition for 3 dimensions, but this applies to any number of dimensions)
+
+Z ascending
+Y ascending
+X ascending
+This is meant to be easy to parse with 3 FOR loops:
+```js
+for(x=0; x<xSize; x++){
+    for(y=0; y<ySize; y++){
+        for(z=0; z<zSize; z++){
+            element[x][y][z] = nextIndex;
+        }
+    }
+}
+```
+
+### Underhaul SFR
+- **Array** `dimensions` (An array of 3 Integers; The exterior XYZ dimensions)
+- **Array** `design` (A 3D array of block indicies defining each block in the reactor. (`-1` for air))
+- **Integer** `fuel` (The index of the fuel used in the reactor)
+
+### Overhaul SFR
+- **Array** `dimensions` (An array of 3 Integers; The exterior XYZ dimensions)
+- **Array** `design` (A 3D array of block indicies defining each block in the reactor. (`-1` for air))
+- **Array** `block_recipes` (A 3D array of recipe indicies for each block in the reactor. These are in the same order as in `design`, but **Only the blocks that have recipes are included in this list** (`-1` for no recipe))
+- **Integer** `coolant_recipe` (The index of the coolant recipe used in the reactor)
+
+### Overhaul MSR
+- **Array** `dimensions` (An array of 3 Integers; The exterior XYZ dimensions)
+- **Array** `design` (A 3D array of block indicies defining each block in the reactor. (`-1` for air))
+- **Array** `block_recipes` (A 3D array of recipe indicies for each block in the reactor. These are in the same order as in `design`, but **Only the blocks that have recipes are included in this list** (`-1` for no recipe))
+
+### Overhaul Turbine
+- **Array** `dimensions` (An array of 3 Integers; The exterior XYZ dimensions)
+- **Array** `design` (A 3D array of block indicies defining each block in the turbine. (`-1` for air))
+- **Integer** `recipe` (The index of the recipe used in the turbine)
