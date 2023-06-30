@@ -99,6 +99,13 @@ A collection of fluids (1.13+)
 Refers to a section of NCPF that may be added, extended, or replaced by addons or other software. These may be used to store additional information about configurations or designs that are not a part of core NCPF
 It is reccommended to use a namespaced key to denote modules, but this is not required.
 
+The following core modules are used in NCPF:
+
+### Block Recipes
+`ncpf:block_recipes`
+Defines a list of recipes contained by a block (used for overhaul SFR and MSR, and may be used for custom configurations)
+- **List** `recipes` (Optional; List of Elements)
+
 # NCPF Structure
 **NCPF Version 1**
 
@@ -127,15 +134,11 @@ The following configurations are defined in NCPF:
 ### Overhaul SFR
 - **List** `blocks` (List of Elements)
 - **List** `coolant_recipes` (List of Elements)
-
-Each block element may also contain:
-- **List** `recipes` (Optional; List of Elements)
+Block recipes may be defined by the `ncpf:block_recipes` module
 
 ### Overhaul MSR
 - **List** `blocks` (List of Elements)
-
-Each block element may also contain:
-- **List** `recipes` (Optional; List of Elements)
+Block recipes may be defined by the `ncpf:block_recipes` module
 
 ### Overhaul Turbine
 - **List** `blocks` (List of Elements)
@@ -154,6 +157,7 @@ A design is a multiblock, structure, or other object described by this file; the
 - **String** `type` (the type of the design. This must match the name of a configuration)
 - **Object** `modules` (keyed list of Modules)
 - **Array** `design` (An array containing a list of indicies that define the design; the structure of this array depends on the design type)
+- (additional values depending on the type, listed below)
 
 Element indicies start with the `configuration`, then continue through any matching elements in order of each addon in `addons`
 (All indicies start at `0`)
