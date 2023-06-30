@@ -17,7 +17,7 @@ Any file format that supports the neccesary data structure is supported.
 - List (An ordered list of elements, contains many items of one type)
 
 # Complex Types
-Commonly used types within NCPF that are standardized and defined here. They are all objects, containing the listed substrucutre
+Commonly used types within NCPF that are standardized and defined here. They are all objects, containing the listed substructure
 
 ## Element
 A part used in a design.
@@ -130,6 +130,7 @@ The following configurations are defined in NCPF:
 ### Underhaul SFR
 - **List** `blocks` (List of Elements)
 - **List** `fuels` (List of Elements)
+Block recipes (active coolers) may be defined by the `ncpf:block_recipes` module
 
 ### Overhaul SFR
 - **List** `blocks` (List of Elements)
