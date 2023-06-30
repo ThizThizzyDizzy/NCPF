@@ -22,13 +22,7 @@ Commonly used types within NCPF that are standardized and defined here. They are
 ## Element
 A part used in a design.
 Elements have the following structure:
-- **Object** `definition` (an Element Definition)
 - **Object** `modules` (Optional; keyed list of additional modules)
-
-## Element Definition
-Defines a block, item, fluid, or something else present ingame.
-
-Element definitions have the following structure:
 - **String** `type`
 - (additional values depending on the type, listed below)
 
