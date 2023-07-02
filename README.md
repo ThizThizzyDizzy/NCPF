@@ -115,6 +115,7 @@ The base object contains the following tags:
 - **Object** `configuration` (This defines the indexing of elements used for designs in the file)
 - **List** `addons` (Optional; a list of addons)
 - **List** `designs` (Optional; A list of contained designs)
+- **Object** `modules` (Contains various NCPF modules that can store additional information for the file)
 
 ## Configurations
 The configuration object contains configurations for defined design types; keys are recommended to be namespaced keys, but this is not required.
