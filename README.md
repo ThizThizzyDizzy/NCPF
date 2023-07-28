@@ -1,4 +1,4 @@
-# NCPF Specifications (VERY WIP)
+# NCPF Specifications (WIP)
 *For Legacy NCPF versions, see [NCPF Format and Configuration Guidelines](https://docs.google.com/document/d/1dzU2arDrD7n9doRua8laxzRy9_RtX-cuv1sUJBB5aGY/edit#heading=h.a5zsimflpf1b)*
 
 # File Format
@@ -45,7 +45,13 @@ It is highly reccommended to identify custom types to avoid compatibility issues
 A block with optional metadata or NBT (1.12 and below)
 - **String** `name` (Must be a namespaced key; ex. `minecraft:stone`)
 - **Integer** `metadata` (must only be included if the block has multiple states)
+- **Object** `blockstate` (optional, only include if a specific state or states are required)
+This contains all required states, with the state name as the key, and the value as either an `Integer` or `String`
+*Numerical values may not be saved as strings*
 - **String** `nbt` (Optional; only for block entities. This is in SNBT format)
+
+Due to 1.12's messy metadata/blockstate situation, both are present here; `metadata` may define one state, (ex. heater type) while `blockstate` defines more states, (ex. input/output)
+`blockstate` must not contain states defined by metadata.
 
 ### Legacy Item
 An item with optional metadata or NBT (1.12 and below)
