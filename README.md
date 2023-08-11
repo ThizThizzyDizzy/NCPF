@@ -50,8 +50,7 @@ This contains all required states, with the state name as the key, and the value
 *Numerical values may not be saved as strings*
 - **String** `nbt` (Optional; only for block entities. This is in SNBT format)
 
-Due to 1.12's messy metadata/blockstate situation, both are present here; `metadata` may define one state, (ex. heater type) while `blockstate` defines more states, (ex. input/output)
-`blockstate` must not contain states defined by metadata.
+Due to 1.12's messy metadata/blockstate situation, both are present here. `blockstate` should contain all relevant states, including those defined by metadata
 
 ### Legacy Item
 An item with optional metadata or NBT (1.12 and below)
