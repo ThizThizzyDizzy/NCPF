@@ -103,7 +103,7 @@ A collection of fluids (1.13+)
 
 ### List
 A collection of multiple allowed ingredients (ex. multiple oredicts) that may be used.
-- **List** `elements` (List of Elements)
+- **List** `elements` (List of Element Definitions, i.e. elements containing only a type and no data)
 
 ## Module
 Refers to a section of NCPF that may be added, extended, or replaced by addons or other software. These may be used to store additional information about configurations or designs that are not a part of core NCPF
