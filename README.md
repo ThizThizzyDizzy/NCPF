@@ -37,6 +37,7 @@ Here is a list of all defined types:
 - `block_tag`
 - `item_tag`
 - `fluid_tag`
+- `list`
 
 Custom types are also allowed.
 It is highly reccommended to identify custom types to avoid compatibility issues (For example, using a namespaced key), but it is not required.
@@ -99,6 +100,10 @@ A collection of items with optional NBT (1.13+)
 ### Fluid Tag
 A collection of fluids (1.13+)
 - **String** `name` (Must be a namespaced key, prefixed with `#`; ex. `#minecraft:water`)
+
+### List
+A collection of multiple allowed ingredients (ex. multiple oredicts) that may be used.
+- **List** `elements` (List of Elements)
 
 ## Module
 Refers to a section of NCPF that may be added, extended, or replaced by addons or other software. These may be used to store additional information about configurations or designs that are not a part of core NCPF
