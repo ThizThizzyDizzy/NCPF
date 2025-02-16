@@ -1,5 +1,9 @@
-# NCPF Specifications (WIP)
+# NCPF Library & Specifications
 *For Legacy NCPF versions, see [NCPF Format and Configuration Guidelines](https://docs.google.com/document/d/1dzU2arDrD7n9doRua8laxzRy9_RtX-cuv1sUJBB5aGY/edit#heading=h.a5zsimflpf1b)*
+
+This repository contains a basic library for encoding/decoding NCPF.JSON, using Gson.
+
+The remainder of this README describes the NCPF format:
 
 # File Format
 NCPF is no longer just a file type, but rather a data structure, and can be saved in any file format that supports it.
