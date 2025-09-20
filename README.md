@@ -42,6 +42,8 @@ Here is a list of all defined types:
 - `item_tag`
 - `fluid_tag`
 - `list`
+- `legacy_recipe` (For recipes without a unique identifier such as a namespaced key)
+- `recipe` (For recipes with a unique identifier such as a namespaced key)
 
 Custom types are also allowed.
 It is highly reccommended to identify custom types to avoid compatibility issues (For example, using a namespaced key), but it is not required.
@@ -108,6 +110,16 @@ A collection of fluids (1.13+)
 ### List
 A collection of multiple allowed ingredients (ex. multiple oredicts) that may be used.
 - **List** `elements` (List of Element Definitions, i.e. elements containing only a type and no data)
+
+### Legacy Recipe
+A recipe identified by its inputs and outputs, and NOT a unique identifier.
+- **Set** `elements` (Set of Element Definitions, i.e. elements containing only a type and no data)
+*All base elements in a legacy recipe, (i.e. including the children of list elements, but not the list elements themselves) must have:*
+- **Integer** `amount` (The quantity for input or output. For fluids, this is in mb)
+
+### Recipe
+A recipe with a unique identifier.
+- **String** `name` (The unique identifier for the recipe, usually a namespaced key)
 
 ## Module
 Refers to a section of NCPF that may be added, extended, or replaced by addons or other software. These may be used to store additional information about configurations or designs that are not a part of core NCPF
