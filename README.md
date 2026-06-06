@@ -215,6 +215,7 @@ for(x=0; x<xSize; x++){
 ### Underhaul SFR
 - **Array** `dimensions` (An array of 3 Integers; The exterior XYZ dimensions)
 - **Array** `design` (A 3D array of block indicies defining each block in the reactor. (`-1` for air))
+- **Array** `block_recipes` (a 3D array of recipe indicies for each block in the reactor. These are in the same order as in `design`, but **Only the blocks that have recipes are included in this list** (`-1` for no recipe))
 - **Integer** `fuel` (The index of the fuel used in the reactor)
 
 ### Overhaul SFR
