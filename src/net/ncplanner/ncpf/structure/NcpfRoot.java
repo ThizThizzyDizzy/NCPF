@@ -1,6 +1,6 @@
 package net.ncplanner.ncpf.structure;
-import net.ncplanner.ncpf.structure.design.NcpfDesign;
 import java.util.List;
+import net.ncplanner.ncpf.structure.design.NcpfDesign;
 public class NcpfRoot{
     public int version;
     public NcpfConfigurations configuration;

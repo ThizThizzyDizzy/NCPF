@@ -1,6 +1,5 @@
 package net.ncplanner.ncpf.structure;
 
-import net.ncplanner.ncpf.structure.module.NcpfModule;
 import com.google.gson.TypeAdapter;
 import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.reflect.TypeToken;
@@ -10,12 +9,24 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import net.ncplanner.ncpf.Parser;
+import java.util.function.Supplier;
+import net.ncplanner.ncpf.io.NcpfJsonConverter;
+import net.ncplanner.ncpf.registry.NcpfRegistered;
 import net.ncplanner.ncpf.registry.NcpfRegistry;
+import net.ncplanner.ncpf.structure.module.NcpfModule;
 
 @JsonAdapter(NcpfModules.Adapter.class)
 public class NcpfModules{
-    private Map<String, NcpfModule> modules = new LinkedHashMap<>();
+    private final Map<String, NcpfModule> modules = new LinkedHashMap<>();
+    
+    public <T extends NcpfModule> T getOrCreateModule(Supplier<T> supplier){
+        var module = supplier.get();
+        var clazz = module.getClass();
+        String key = clazz.getAnnotation(NcpfRegistered.class).value();
+        if(modules.containsKey(key))return (T)modules.get(key);
+        modules.put(key, module);
+        return module;
+    }
 
     public static class Adapter extends TypeAdapter<NcpfModules>{
         private static final Type MAP_TYPE = new TypeToken<Map<String, NcpfModule>>(){
@@ -23,7 +34,7 @@ public class NcpfModules{
  
         @Override
         public void write(JsonWriter out, NcpfModules value) throws IOException{
-            Parser.gson.toJson(value.modules, MAP_TYPE, out);
+            NcpfJsonConverter.gson.toJson(value.modules, MAP_TYPE, out);
         }
 
         @Override
@@ -33,7 +44,7 @@ public class NcpfModules{
             while(in.hasNext()){
                 String key = in.nextName();
                 Class<? extends NcpfModule> type = NcpfRegistry.MODULE_REGISTRY.get(key);
-                modules.modules.put(key, Parser.gson.fromJson(in, type));
+                modules.modules.put(key, NcpfJsonConverter.gson.fromJson(in, type));
             }
             in.endObject();
             return modules;

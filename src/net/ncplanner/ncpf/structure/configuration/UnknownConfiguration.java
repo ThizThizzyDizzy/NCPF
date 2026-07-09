@@ -10,7 +10,7 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import net.ncplanner.ncpf.Parser;
+import net.ncplanner.ncpf.io.NcpfJsonConverter;
 import net.ncplanner.ncpf.registry.NcpfRegistered;
 import net.ncplanner.ncpf.structure.NcpfModules;
 
@@ -25,7 +25,7 @@ public class UnknownConfiguration extends NcpfConfiguration{
             for (Map.Entry<String, JsonElement> entry : value.rawJson.entrySet()){
                 obj.add(entry.getKey(), entry.getValue());
             }
-            if (value.modules != null) obj.add("modules", Parser.gson.toJsonTree(value.modules));
+            if (value.modules != null) obj.add("modules", NcpfJsonConverter.gson.toJsonTree(value.modules));
             Streams.write(obj, out);
         }
         @Override
@@ -36,7 +36,7 @@ public class UnknownConfiguration extends NcpfConfiguration{
                 String key = entry.getKey();
                 JsonElement element = entry.getValue();
                 switch (key){
-                    case "modules" -> configuration.modules = Parser.gson.fromJson(element, NcpfModules.class);
+                    case "modules" -> configuration.modules = NcpfJsonConverter.gson.fromJson(element, NcpfModules.class);
                 }
                 configuration.rawJson.put(key, element);
             }

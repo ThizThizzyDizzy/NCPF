@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import net.ncplanner.ncpf.Parser;
+import net.ncplanner.ncpf.io.NcpfJsonConverter;
 import net.ncplanner.ncpf.registry.NcpfRegistered;
 import net.ncplanner.ncpf.structure.module.NcpfModule;
 @NcpfRegistered("plannerator:metadata")
@@ -19,12 +19,12 @@ public class MetadataModule implements NcpfModule{
         private static final Type MAP_TYPE = new TypeToken<Map<String, String>>(){}.getType();
         @Override
         public void write(JsonWriter out, MetadataModule module) throws IOException{
-            Parser.gson.toJson(module.metadata, MAP_TYPE, out);
+            NcpfJsonConverter.gson.toJson(module.metadata, MAP_TYPE, out);
         }
         @Override
         public MetadataModule read(JsonReader in) throws IOException{
             MetadataModule module = new MetadataModule();
-            module.metadata = Parser.gson.fromJson(in, MAP_TYPE);
+            module.metadata = NcpfJsonConverter.gson.fromJson(in, MAP_TYPE);
             return module;
         }
     }

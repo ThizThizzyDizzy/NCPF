@@ -1,6 +1,7 @@
-package net.ncplanner.ncpf.structure.configuration;
+package net.ncplanner.ncpf.structure.configuration.nuclearcraft;
 import java.util.List;
 import net.ncplanner.ncpf.registry.NcpfRegistered;
+import net.ncplanner.ncpf.structure.configuration.NcpfConfiguration;
 import net.ncplanner.ncpf.structure.element.NcpfElement;
 @NcpfRegistered("nuclearcraft:underhaul_sfr")
 public class UnderhaulSFRConfiguration extends NcpfConfiguration{

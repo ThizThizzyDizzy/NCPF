@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import net.ncplanner.ncpf.Parser;
+import net.ncplanner.ncpf.io.NcpfJsonConverter;
 
 @JsonAdapter(BlockstateMap.Adapter.class)
 public class BlockstateMap{
@@ -21,13 +21,13 @@ public class BlockstateMap{
 
         @Override
         public void write(JsonWriter out, BlockstateMap value) throws IOException{
-            Parser.gson.toJson(value.blockstates, MAP_TYPE, out);
+            NcpfJsonConverter.gson.toJson(value.blockstates, MAP_TYPE, out);
         }
 
         @Override
         public BlockstateMap read(JsonReader in) throws IOException{
             BlockstateMap blockstateMap = new BlockstateMap();
-            blockstateMap.blockstates = Parser.gson.fromJson(in, MAP_TYPE);
+            blockstateMap.blockstates = NcpfJsonConverter.gson.fromJson(in, MAP_TYPE);
             return blockstateMap;
         }
     }

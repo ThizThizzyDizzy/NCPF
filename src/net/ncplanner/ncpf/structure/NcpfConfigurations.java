@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import net.ncplanner.ncpf.Parser;
+import net.ncplanner.ncpf.io.NcpfJsonConverter;
 import net.ncplanner.ncpf.registry.NcpfRegistry;
 import net.ncplanner.ncpf.structure.configuration.NcpfConfiguration;
 
@@ -23,7 +23,7 @@ public class NcpfConfigurations{
  
         @Override
         public void write(JsonWriter out, NcpfConfigurations value) throws IOException{
-            Parser.gson.toJson(value.configurations, MAP_TYPE, out);
+            NcpfJsonConverter.gson.toJson(value.configurations, MAP_TYPE, out);
         }
 
         @Override
@@ -33,7 +33,7 @@ public class NcpfConfigurations{
             while(in.hasNext()){
                 String key = in.nextName();
                 Class<? extends NcpfConfiguration> type = NcpfRegistry.CONFIGURATION_REGISTRY.get(key);
-                configs.configurations.put(key, Parser.gson.fromJson(in, type));
+                configs.configurations.put(key, NcpfJsonConverter.gson.fromJson(in, type));
             }
             in.endObject();
             return configs;

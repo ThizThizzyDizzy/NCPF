@@ -1,5 +1,6 @@
 package net.ncplanner.ncpf;
 
+import net.ncplanner.ncpf.io.NcpfJsonConverter;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -48,11 +49,11 @@ public class NcpfTester {
             // 2. Parse into your object model
             NcpfRoot ncpf;
             try (JsonReader jsonReader = new JsonReader(new StringReader(rawBaselineJson))) {
-                ncpf = Parser.parseNcpf(jsonReader);
+                ncpf = NcpfJsonConverter.parseJson(jsonReader);
             }
 
             // 3. Serialize back out and map Parsed structure
-            String rawParsedJson = Parser.gson.toJson(ncpf);
+            String rawParsedJson = NcpfJsonConverter.gson.toJson(ncpf);
             Map<String, StructureContext> parsedMap = new HashMap<>();
             JsonElement parsedElement = JsonParser.parseString(rawParsedJson);
             flattenTree(parsedElement, "", parsedMap);

@@ -6,7 +6,7 @@ import com.google.gson.internal.Streams;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
-import net.ncplanner.ncpf.Parser;
+import net.ncplanner.ncpf.io.NcpfJsonConverter;
 import net.ncplanner.ncpf.registry.NcpfRegistered;
 import net.ncplanner.ncpf.registry.NcpfRegistry;
 import net.ncplanner.ncpf.structure.NcpfModules;
@@ -17,9 +17,9 @@ public abstract class NcpfDesign{
     public static class Adapter extends TypeAdapter<NcpfDesign>{
         @Override
         public void write(JsonWriter out, NcpfDesign design) throws IOException{
-            var json = Parser.gson.toJsonTree(design, design.getClass()).getAsJsonObject();
+            var json = NcpfJsonConverter.gson.toJsonTree(design, design.getClass()).getAsJsonObject();
             json.addProperty("type", design.getClass().getAnnotation(NcpfRegistered.class).value());
-            Parser.gson.toJson(json, out);
+            NcpfJsonConverter.gson.toJson(json, out);
         }
 
         @Override
@@ -27,7 +27,7 @@ public abstract class NcpfDesign{
             JsonObject obj = Streams.parse(in).getAsJsonObject();
             String typeStr = obj.get("type").getAsString();
             Class<? extends NcpfDesign> type = NcpfRegistry.DESIGN_REGISTRY.get(typeStr);
-            return Parser.gson.fromJson(obj, type);
+            return NcpfJsonConverter.gson.fromJson(obj, type);
         }
     }
 }
