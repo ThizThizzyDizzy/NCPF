@@ -1,4 +1,5 @@
 package net.ncplanner.ncpf.structure;
+import java.util.ArrayList;
 import java.util.List;
 import net.ncplanner.ncpf.runtime.RuntimeNcpf;
 import net.ncplanner.ncpf.structure.design.NcpfDesign;
@@ -15,8 +16,11 @@ public class NcpfRoot{
         runtime.configuration = configuration;
         runtime.addons = addons;
         runtime.modules = modules;
-        for(NcpfDesign design : designs){
-            runtime.designs.add(design.toRuntime(this));
+        if(designs!=null){
+            runtime.designs = new ArrayList<>();
+            for(NcpfDesign design : designs){
+                runtime.designs.add(design.toRuntime(this));
+            }
         }
         return runtime;
     }

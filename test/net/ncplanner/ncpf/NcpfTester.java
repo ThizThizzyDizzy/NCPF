@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 import java.util.stream.Stream;
+import net.ncplanner.ncpf.runtime.RuntimeNcpf;
 import net.ncplanner.ncpf.structure.NcpfRoot;
 
 public class NcpfTester {
@@ -52,13 +53,17 @@ public class NcpfTester {
                 ncpf = NcpfJsonConverter.parseJson(jsonReader);
             }
 
-            // 3. Serialize back out and map Parsed structure
+            // 3. Convert to runtime and compile back
+            RuntimeNcpf runtime = ncpf.toRuntime();
+            ncpf = runtime.compile();
+
+            // 4. Serialize back out and map Parsed structure
             String rawParsedJson = NcpfJsonConverter.gson.toJson(ncpf);
             Map<String, StructureContext> parsedMap = new HashMap<>();
             JsonElement parsedElement = JsonParser.parseString(rawParsedJson);
             flattenTree(parsedElement, "", parsedMap);
 
-            // 4. Structural Map Comparison
+            // 5. Structural Map Comparison
             boolean match = compareStructures(baselineMap, parsedMap);
             
             if (match) {

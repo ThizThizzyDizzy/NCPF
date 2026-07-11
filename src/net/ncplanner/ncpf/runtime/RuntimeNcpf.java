@@ -10,7 +10,7 @@ public class RuntimeNcpf{
     public int version;
     public NcpfConfigurations configuration;
     public List<NcpfAddon> addons;
-    public List<RuntimeDesign> designs = new ArrayList<>();
+    public List<RuntimeDesign> designs;
     public NcpfModules modules;
     public NcpfRoot compile(){
         //TODO decoupled copy?
@@ -19,8 +19,11 @@ public class RuntimeNcpf{
         ncpf.configuration = configuration;
         ncpf.addons = addons;
         ncpf.modules = modules;
-        for(RuntimeDesign design : designs){
-            ncpf.designs.add(design.compile(this));
+        if(designs!=null){
+            ncpf.designs = new ArrayList<>();
+            for(RuntimeDesign design : designs){
+                ncpf.designs.add(design.compile(this));
+            }
         }
         return ncpf;
     }
