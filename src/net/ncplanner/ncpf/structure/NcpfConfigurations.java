@@ -10,6 +10,7 @@ import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import net.ncplanner.ncpf.io.NcpfJsonConverter;
+import net.ncplanner.ncpf.registry.NcpfRegistered;
 import net.ncplanner.ncpf.registry.NcpfRegistry;
 import net.ncplanner.ncpf.structure.configuration.NcpfConfiguration;
 
@@ -17,6 +18,12 @@ import net.ncplanner.ncpf.structure.configuration.NcpfConfiguration;
 public class NcpfConfigurations{
     private Map<String, NcpfConfiguration> configurations = new LinkedHashMap<>();
 
+    public <T extends NcpfConfiguration> T getConfiguration(Class<T> type){
+        String key = type.getAnnotation(NcpfRegistered.class).value();
+        if(configurations.containsKey(key))return (T)configurations.get(key);
+        return null;
+    }
+    
     public static class Adapter extends TypeAdapter<NcpfConfigurations>{
         private static final Type MAP_TYPE = new TypeToken<Map<String, NcpfConfiguration>>(){
         }.getType();

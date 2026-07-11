@@ -19,6 +19,11 @@ import net.ncplanner.ncpf.structure.module.NcpfModule;
 public class NcpfModules{
     private final Map<String, NcpfModule> modules = new LinkedHashMap<>();
     
+    public <T extends NcpfModule> T getModule(Class<T> type){
+        String key = type.getAnnotation(NcpfRegistered.class).value();
+        if(modules.containsKey(key))return (T)modules.get(key);
+        return null;
+    }
     public <T extends NcpfModule> T getOrCreateModule(Supplier<T> supplier){
         var module = supplier.get();
         var clazz = module.getClass();

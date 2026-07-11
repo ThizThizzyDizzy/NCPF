@@ -10,14 +10,21 @@ import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import net.ncplanner.ncpf.exception.NcpfUnknownDesignException;
 import net.ncplanner.ncpf.io.NcpfJsonConverter;
 import net.ncplanner.ncpf.registry.NcpfRegistered;
+import net.ncplanner.ncpf.runtime.design.RuntimeDesign;
 import net.ncplanner.ncpf.structure.NcpfModules;
+import net.ncplanner.ncpf.structure.NcpfRoot;
 
 @NcpfRegistered("")
 @JsonAdapter(UnknownDesign.Adapter.class)
 public class UnknownDesign extends NcpfDesign{
     private LinkedHashMap<String, JsonElement> rawJson = new LinkedHashMap<>();
+    @Override
+    public RuntimeDesign toRuntime(NcpfRoot ncpf){
+        throw new NcpfUnknownDesignException(this, "Could not convert UnknownDesign to RuntimeDesign!");
+    }
     public static class Adapter extends TypeAdapter<UnknownDesign>{
         @Override
         public void write(JsonWriter out, UnknownDesign value) throws IOException{
