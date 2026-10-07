@@ -7,6 +7,7 @@ import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import net.ncplanner.ncpf.io.NcpfJsonConverter;
@@ -22,6 +23,9 @@ public class NcpfConfigurations{
         String key = type.getAnnotation(NcpfRegistered.class).value();
         if(configurations.containsKey(key))return (T)configurations.get(key);
         return null;
+    }
+    public Collection<NcpfConfiguration> getConfigurations(){
+        return configurations.values();
     }
     
     public static class Adapter extends TypeAdapter<NcpfConfigurations>{

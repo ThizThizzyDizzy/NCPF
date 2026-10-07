@@ -13,7 +13,7 @@ public class OverhaulMSRDesign extends NcpfDesign{
     public int[][][] block_recipes;
     @Override
     public RuntimeDesign toRuntime(NcpfRoot ncpf){
-        RuntimeOverhaulMSRDesign runtime = new RuntimeOverhaulMSRDesign();
+        RuntimeOverhaulMSRDesign runtime = new RuntimeOverhaulMSRDesign(dimensions[0], dimensions[1], dimensions[2]);
         var config = ncpf.configuration.getConfiguration(OverhaulMSRConfiguration.class);
         runtime.modules = modules;
         runtime.design = new RuntimeBlock[dimensions[0]][dimensions[1]][dimensions[2]];

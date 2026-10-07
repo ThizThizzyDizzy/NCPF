@@ -7,6 +7,9 @@ import net.ncplanner.ncpf.structure.design.NcpfDesign;
 import net.ncplanner.ncpf.structure.design.nuclearcraft.OverhaulMSRDesign;
 public class RuntimeOverhaulMSRDesign extends RuntimeDesign{
     public RuntimeBlock[][][] design;
+    public RuntimeOverhaulMSRDesign(int x, int y, int z){
+        design = new RuntimeBlock[x][y][z];
+    }
     @Override
     public NcpfDesign compile(RuntimeNcpf ncpf){
         OverhaulMSRDesign compiled = new OverhaulMSRDesign();

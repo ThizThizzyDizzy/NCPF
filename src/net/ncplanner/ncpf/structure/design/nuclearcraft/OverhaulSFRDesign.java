@@ -1,6 +1,5 @@
 package net.ncplanner.ncpf.structure.design.nuclearcraft;
 import net.ncplanner.ncpf.registry.NcpfRegistered;
-import net.ncplanner.ncpf.runtime.RuntimeBlock;
 import net.ncplanner.ncpf.runtime.design.RuntimeDesign;
 import net.ncplanner.ncpf.runtime.design.nuclearcraft.RuntimeOverhaulSFRDesign;
 import net.ncplanner.ncpf.structure.NcpfRoot;
@@ -14,10 +13,9 @@ public class OverhaulSFRDesign extends NcpfDesign{
     public int coolant_recipe;
     @Override
     public RuntimeDesign toRuntime(NcpfRoot ncpf){
-        RuntimeOverhaulSFRDesign runtime = new RuntimeOverhaulSFRDesign();
+        RuntimeOverhaulSFRDesign runtime = new RuntimeOverhaulSFRDesign(dimensions[0], dimensions[1], dimensions[2]);
         var config = ncpf.configuration.getConfiguration(OverhaulSFRConfiguration.class);
         runtime.modules = modules;
-        runtime.design = new RuntimeBlock[dimensions[0]][dimensions[1]][dimensions[2]];
         convertDesignArrays(design, block_recipes, config.blocks, runtime.design);
         runtime.coolantRecipe = convertElement(coolant_recipe, config.coolant_recipes);
         return runtime;

@@ -9,6 +9,9 @@ import net.ncplanner.ncpf.structure.element.NcpfElement;
 public class RuntimeOverhaulTurbineDesign extends RuntimeDesign{
     public RuntimeBlock[][][] design;
     public NcpfElement recipe;
+    public RuntimeOverhaulTurbineDesign(int x, int y, int z){
+        design = new RuntimeBlock[x][y][z];
+    }
     @Override
     public NcpfDesign compile(RuntimeNcpf ncpf){
         OverhaulTurbineDesign compiled = new OverhaulTurbineDesign();

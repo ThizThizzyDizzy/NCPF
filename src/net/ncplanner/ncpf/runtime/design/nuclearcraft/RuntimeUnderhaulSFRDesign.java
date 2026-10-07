@@ -9,6 +9,9 @@ import net.ncplanner.ncpf.structure.element.NcpfElement;
 public class RuntimeUnderhaulSFRDesign extends RuntimeDesign{
     public RuntimeBlock[][][] design;
     public NcpfElement fuel;
+    public RuntimeUnderhaulSFRDesign(int x, int y, int z){
+        design = new RuntimeBlock[x][y][z];
+    }
     @Override
     public NcpfDesign compile(RuntimeNcpf ncpf){
         UnderhaulSFRDesign compiled = new UnderhaulSFRDesign();

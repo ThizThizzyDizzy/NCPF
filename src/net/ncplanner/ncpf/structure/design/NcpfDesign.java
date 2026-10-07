@@ -31,8 +31,7 @@ public abstract class NcpfDesign{
                 for(int z = 0; z<design[x][y].length; z++){
                     if(design[x][y][z]==-1)continue;
                     
-                    RuntimeBlock block = new RuntimeBlock();
-                    block.block = convertElement(design[x][y][z], blocks);
+                    RuntimeBlock block = new RuntimeBlock(convertElement(design[x][y][z], blocks));
                     var recipesModule = block.block.modules.getModule(BlockRecipesModule.class);
                     if(recipesModule!=null){
                         if(x!=lastIdx[0]){

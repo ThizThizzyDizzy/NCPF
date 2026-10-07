@@ -9,6 +9,9 @@ import net.ncplanner.ncpf.structure.element.NcpfElement;
 public class RuntimeOverhaulSFRDesign extends RuntimeDesign{
     public RuntimeBlock[][][] design;
     public NcpfElement coolantRecipe;
+    public RuntimeOverhaulSFRDesign(int x, int y, int z){
+        design = new RuntimeBlock[x][y][z];
+    }
     @Override
     public NcpfDesign compile(RuntimeNcpf ncpf){
         OverhaulSFRDesign compiled = new OverhaulSFRDesign();
