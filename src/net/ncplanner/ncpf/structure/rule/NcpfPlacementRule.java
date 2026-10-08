@@ -15,7 +15,8 @@ public interface NcpfPlacementRule{
         @Override
         public void write(JsonWriter out, NcpfPlacementRule rule) throws IOException{
             var json = NcpfJsonConverter.gson.toJsonTree(rule, rule.getClass()).getAsJsonObject();
-            json.addProperty("type", rule.getClass().getAnnotation(NcpfRegistered.class).value());
+            String registeredType = rule.getClass().getAnnotation(NcpfRegistered.class).value();
+            if(!registeredType.isEmpty()||!json.has("type"))json.addProperty("type", registeredType);
             NcpfJsonConverter.gson.toJson(json, out);
         }
 

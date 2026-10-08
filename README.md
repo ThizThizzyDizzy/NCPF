@@ -196,17 +196,17 @@ The following types are defined in NCPF:
 `nuclearcraft:overhaul_msr`
 `nuclearcraft:overhaul_turbine`
 
-Multi-dimensional arrays must be consolidated into one array in the following order; (Here's the definition for 3 dimensions, but this applies to any number of dimensions)
+Multi-dimensional arrays use nested arrays as the standard representation. For a 3D design, the structure is `design[x][y][z]`, including when an outer dimension has size one. For example, dimensions `[1,1,4]` use `[[[1,2,3,4]]]`, not `[1,2,3,4]`.
 
-Z ascending
-Y ascending
-X ascending
-This is meant to be easy to parse with 3 FOR loops:
+Recipe arrays also use nested arrays, grouped by X and Y, with only recipe-bearing blocks included.
+
+The library accepts flattened arrays for compatibility with existing files, but flattened arrays are not the standard. When traversing either representation, Z changes fastest, followed by Y, then X:
+
 ```js
 for(x=0; x<xSize; x++){
     for(y=0; y<ySize; y++){
         for(z=0; z<zSize; z++){
-            element[x][y][z] = nextIndex;
+            // Process design[x][y][z].
         }
     }
 }

@@ -66,7 +66,8 @@ public abstract class NcpfDesign{
         @Override
         public void write(JsonWriter out, NcpfDesign design) throws IOException{
             var json = NcpfJsonConverter.gson.toJsonTree(design, design.getClass()).getAsJsonObject();
-            json.addProperty("type", design.getClass().getAnnotation(NcpfRegistered.class).value());
+            String registeredType = design.getClass().getAnnotation(NcpfRegistered.class).value();
+            if(!registeredType.isEmpty()||!json.has("type"))json.addProperty("type", registeredType);
             NcpfJsonConverter.gson.toJson(json, out);
         }
 
@@ -75,6 +76,26 @@ public abstract class NcpfDesign{
             JsonObject obj = Streams.parse(in).getAsJsonObject();
             String typeStr = obj.get("type").getAsString();
             Class<? extends NcpfDesign> type = NcpfRegistry.DESIGN_REGISTRY.get(typeStr);
+            if(type!=net.ncplanner.ncpf.structure.design.UnknownDesign.class&&obj.has("dimensions")&&obj.has("design")&&obj.get("design").isJsonArray()){
+                var array = obj.getAsJsonArray("design");
+                if(!array.isEmpty()&&array.get(0).isJsonPrimitive()){
+                    var dims = obj.getAsJsonArray("dimensions");
+                    int xSize=dims.get(0).getAsInt(), ySize=dims.get(1).getAsInt(), zSize=dims.get(2).getAsInt();
+                    if(xSize<=0||ySize<=0||zSize<=0||(long)xSize*ySize*zSize!=array.size())throw new com.google.gson.JsonParseException("Incorrect flattened design dimensions");
+                    com.google.gson.JsonArray expanded = new com.google.gson.JsonArray();
+                    int index=0;
+                    for(int x=0;x<xSize;x++){
+                        com.google.gson.JsonArray plane = new com.google.gson.JsonArray();
+                        for(int y=0;y<ySize;y++){
+                            com.google.gson.JsonArray row = new com.google.gson.JsonArray();
+                            for(int z=0;z<zSize;z++)row.add(array.get(index++));
+                            plane.add(row);
+                        }
+                        expanded.add(plane);
+                    }
+                    obj.add("design", expanded);
+                }
+            }
             return NcpfJsonConverter.gson.fromJson(obj, type);
         }
     }

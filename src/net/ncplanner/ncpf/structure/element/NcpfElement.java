@@ -17,7 +17,8 @@ public class NcpfElement{
         @Override
         public void write(JsonWriter out, NcpfElement element) throws IOException{
             var json = NcpfJsonConverter.gson.toJsonTree(element, element.getClass()).getAsJsonObject();
-            json.addProperty("type", element.getClass().getAnnotation(NcpfRegistered.class).value());
+            String registeredType = element.getClass().getAnnotation(NcpfRegistered.class).value();
+            if(!registeredType.isEmpty()||!json.has("type"))json.addProperty("type", registeredType);
             NcpfJsonConverter.gson.toJson(json, out);
         }
         @Override
