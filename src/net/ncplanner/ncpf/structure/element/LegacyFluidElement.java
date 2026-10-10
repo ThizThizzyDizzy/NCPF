@@ -3,4 +3,5 @@ import net.ncplanner.ncpf.registry.NcpfRegistered;
 @NcpfRegistered("legacy_fluid")
 public class LegacyFluidElement extends NcpfElement{
     public String name;
+    public boolean gaseous;
 }
