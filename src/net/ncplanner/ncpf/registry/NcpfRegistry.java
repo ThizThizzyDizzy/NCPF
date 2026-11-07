@@ -35,7 +35,14 @@ public class NcpfRegistry<T>{
         ELEMENT_REGISTRY.registerInternal(UnknownElement.class);
         PLACEMENT_RULE_REGISTRY.registerInternal(UnknownPlacementRule.class);
 
-        try(ScanResult scanResult = new ClassGraph()
+        String hostedRegistry = System.getProperty("ncpf.registrationResource");
+        if(hostedRegistry != null){
+            try(java.io.InputStream input = NcpfRegistry.class.getClassLoader().getResourceAsStream(hostedRegistry);
+                java.io.BufferedReader reader = new java.io.BufferedReader(new java.io.InputStreamReader(java.util.Objects.requireNonNull(input, hostedRegistry)))){
+                String name;
+                while((name=reader.readLine())!=null)if(!name.isBlank())register(Class.forName(name));
+            }catch(Exception ex){throw new ExceptionInInitializerError(ex);}
+        }else try(ScanResult scanResult = new ClassGraph()
             .enableClassInfo()
             .enableAnnotationInfo()
             .scan()){
